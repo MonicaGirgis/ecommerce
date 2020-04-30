@@ -13,7 +13,8 @@
 
 Route::get('/', 'catCon@index');
 Route::get('/Clothing-website', 'catCon@index')->name('home');
-Route::get('/Clothing-website/categories/{id}','ecom@show')->name('categories');
+//Route::get('/Clothing-website/categories/{id}','ecom@show')->name('categories');
+Route::get('/Clothing-website/categories/{id?}','catCon@show')->name('categories');
 //Route::post('/Clothing-website/contact','ecom@contcat')->name('contact');
 
 

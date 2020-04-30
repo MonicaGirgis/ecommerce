@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     public $table="users";
     public function prods(){
-        return $this->belongsToMany('App\prod');
+        return $this->hasMany('App\prod_user');
     }
     
     /**

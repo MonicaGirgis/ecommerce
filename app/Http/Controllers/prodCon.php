@@ -153,7 +153,7 @@ class prodCon extends Controller
             $catold->count =$catold->count-1;
             $catold->save();
         }
-        return $p->catId;
+        //return $p->catId;
         return redirect(route('home'));
     }
 
@@ -165,6 +165,11 @@ class prodCon extends Controller
      */
     public function destroy($id)
     {
-        //
+        $prod=prod::find($id);
+        $cat=cat::find($prod->catId);
+        $cat->count =$cat->count-1;
+        $cat->save();
+        $prod->destroy($id);
+        return redirect(route('cat.index'))->with('msg','OK delete');
     }
 }

@@ -17,7 +17,7 @@ class buying extends Controller
 
     public function setSession(Request $req,$id,$qty=1){
             //$req->session()->flush();
-            print_r($req->session()->all());
+            //print_r($req->session()->all());
         if($req->session($id))
         {
             $q=$req->session()->pull($id);
@@ -30,6 +30,7 @@ class buying extends Controller
             $req->session()->put($id,$qty);
         }
         return redirect()->back();
+        //return $id;
     }
 
     public function forgetSession(Request $req,$id){
@@ -59,11 +60,16 @@ class buying extends Controller
                 $prod =new prod();
                 $prod=prod::where('name','=',$key)->get()->first();
                 $p = new prod_user();
+            if($prod['id']){
                  $p->prod_id =$prod['id'];
                  $p->quantity =$obj;
                  $p->user_id=1;
+                // print_r($prod['id']);
+                 //echo "<br>";
                  $p->save();
+                }
             }
+        $req->session()->flush();   
         return redirect()->back();
     }
 

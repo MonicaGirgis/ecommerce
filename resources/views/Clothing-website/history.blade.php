@@ -28,7 +28,7 @@
                                             <img src="uplaod/{{$prod->img}}" alt="" />	
                                     </div>	
                                     <!-- Title -->
-                                    <h1 class="title">$prod->name</h1>
+                                    <h1 class="title">{{ $prod->prod_id }}</h1>
                                     <!-- Price Ratting -->
                                     <div class="price-ratting section">
                                         <!-- Price -->

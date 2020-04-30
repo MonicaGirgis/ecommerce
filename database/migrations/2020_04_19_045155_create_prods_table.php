@@ -17,7 +17,7 @@ class CreateProdsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->integer('catId')->unsigned();
-            $table->foreign('catId')->references('id')->on('cats');
+            $table->foreign('catId')->references('id')->on('cats')->onDelete('cascade')->onUpdate('cascade');
             $table->string('img');
             $table->text('des');
             $table->integer('available');

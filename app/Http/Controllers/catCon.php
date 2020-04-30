@@ -59,8 +59,8 @@ class catCon extends Controller
         $c2->img =$catImg;
         $c2->save();
         $request->img->move(public_path('uplaod'),$catImg);
-        return $request->all();
-        //return redirect(route('categories'));
+        //return $request->all();
+        return redirect(route('categories'));
     }
 
     /**
@@ -69,9 +69,18 @@ class catCon extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=1)
     {
-        //
+        $products=prod::where('catId','=',$id)->get();
+        
+        $categoryies=cat::all();
+        return view('Clothing-website.categories')->with(
+            [
+                'cats'=>$categoryies,
+                'id'=>$id,
+                'prods'=>$products
+            ]
+        );
     }
 
     /**
@@ -82,7 +91,9 @@ class catCon extends Controller
      */
     public function edit($id)
     {
-        //
+        $cat=cat::find($id);
+        //return $id;
+        return view('Clothing-website.editcat')->with('cat',$cat);
     }
 
     /**
@@ -94,7 +105,23 @@ class catCon extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'category-name'=>'required|unique:cats,name|max:225',
+            'img'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',//2048=2M
+            'category-id'=>'required'
+        ]);
+        
+        //$request->file('img');
+        
+        $catImg=time() . '.' . $request->img->getClientOriginalExtension();
+        $c2 = cat::find($id);
+        $c2->id =$request->input('category-id');
+        $c2->name =$request->input('category-name');
+        $c2->img =$catImg;
+        $c2->save();
+        $request->img->move(public_path('uplaod'),$catImg);
+        //return $request->all();
+        return redirect(route('home'));   
     }
 
     /**
@@ -105,6 +132,9 @@ class catCon extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cat=cat::find($id);
+        
+        $cat->destroy($id);
+        return redirect(route('cat.index'))->with('msg','OK deledet');
     }
 }
